@@ -6,7 +6,7 @@
 /*   By: dnakano <dnakano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/06 05:41:52 by dnakano           #+#    #+#             */
-/*   Updated: 2021/05/31 18:48:25 by dnakano          ###   ########.fr       */
+/*   Updated: 2021/05/31 19:12:44 by dnakano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	i;
 	char	*dst_c;
 	char	*src_c;
 
@@ -22,11 +21,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		return (dst);
 	dst_c = (char *)dst;
 	src_c = (char *)src;
-	i = 0;
-	while (i < n)
-	{
-		dst_c[i] = src_c[i];
-		i++;
-	}
+	while (n-- > 0)
+		*dst_c++ = *src_c++;
 	return (dst);
 }
