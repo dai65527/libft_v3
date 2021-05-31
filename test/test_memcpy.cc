@@ -6,7 +6,7 @@
 /*   By: dnakano <dnakano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 15:08:38 by dnakano           #+#    #+#             */
-/*   Updated: 2021/05/31 19:04:22 by dnakano          ###   ########.fr       */
+/*   Updated: 2021/05/31 19:06:29 by dnakano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ TEST_F(memcpyTest, segv_dst_null) {
   EXPECT_EXIT(memcpy(NULL, src, 7), ::testing::KilledBySignal(SIGSEGV), ".*");
   EXPECT_EXIT(ft_memcpy(NULL, src, 7), ::testing::KilledBySignal(SIGSEGV),
               ".*");
+  EXPECT_FALSE(true);
 }
 
 TEST_F(memcpyTest, not_segv_src_dst_null) {
