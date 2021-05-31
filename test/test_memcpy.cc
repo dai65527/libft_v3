@@ -6,7 +6,7 @@
 /*   By: dnakano <dnakano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 15:08:38 by dnakano           #+#    #+#             */
-/*   Updated: 2021/05/31 17:07:15 by dnakano          ###   ########.fr       */
+/*   Updated: 2021/05/31 19:04:22 by dnakano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ class memcpyTest : public ::testing::Test {
   virtual void TearDown() {}
 };
 
-void check(void *src, size_t n) {
+void check(const void *src, size_t n) {
   char dst_std[8096];
   char dst_ft[8096];
   void *ret_std;
@@ -35,7 +35,7 @@ void check(void *src, size_t n) {
 }
 
 TEST_F(memcpyTest, _0BytesString) {
-  char src[] = "";
+  const char src[] = "";
   int len = strlen(src) + 1;
   for (int i = 0; i < len; ++i) {
     check(src, i);
@@ -43,7 +43,7 @@ TEST_F(memcpyTest, _0BytesString) {
 }
 
 TEST_F(memcpyTest, _5BytesString) {
-  char src[] = "TOKYO";
+  const char src[] = "TOKYO";
   int len = strlen(src) + 1;
   for (int i = 0; i < len; ++i) {
     check(src, i);
@@ -51,7 +51,7 @@ TEST_F(memcpyTest, _5BytesString) {
 }
 
 TEST_F(memcpyTest, NonASCIIString) {
-  char src[] = "４２東京";
+  const char src[] = "４２東京";
   int len = strlen(src) + 1;
   for (int i = 0; i < len; ++i) {
     check(src, i);
@@ -59,7 +59,7 @@ TEST_F(memcpyTest, NonASCIIString) {
 }
 
 TEST_F(memcpyTest, longString) {
-  char src[] =
+  const char src[] =
       "1234567890qwertyuiopasdfghjkl;:zxcvbnm,.drtyuhjcm@04eiv6hw450@"
       "gwh8igf7qh3894fwk;3:4rpc,vpju5y89epo7fighrjvk]aRHd;lthjeiso;grjq:"
       "r、f09ru０JQPWFjMP０Fu９pr５hg0@asmgiraf@,"
@@ -83,4 +83,34 @@ TEST_F(memcpyTest, binary) {
   for (int i = 0; i < len; ++i) {
     check(src, i);
   }
+}
+
+TEST_F(memcpyTest, segv_src_null) {
+  char dst[1024];
+
+  // does not segfault
+  EXPECT_EQ(memcpy(dst, NULL, 0), ft_memcpy(dst, NULL, 0));
+
+  // segfault
+  EXPECT_EXIT(memcpy(dst, NULL, 42), ::testing::KilledBySignal(SIGSEGV), ".*");
+  EXPECT_EXIT(ft_memcpy(dst, NULL, 42), ::testing::KilledBySignal(SIGSEGV),
+              ".*");
+}
+
+TEST_F(memcpyTest, segv_dst_null) {
+  const char src[] = "42Tokyo";
+
+  // does not segfault
+  EXPECT_EQ(memcpy(NULL, src, 0), ft_memcpy(NULL, src, 0));
+
+  // segfalut
+  EXPECT_EXIT(memcpy(NULL, src, 7), ::testing::KilledBySignal(SIGSEGV), ".*");
+  EXPECT_EXIT(ft_memcpy(NULL, src, 7), ::testing::KilledBySignal(SIGSEGV),
+              ".*");
+}
+
+TEST_F(memcpyTest, not_segv_src_dst_null) {
+  // does not segfault
+  memcpy(NULL, NULL, 42);
+  ft_memcpy(NULL, NULL, 42);
 }
