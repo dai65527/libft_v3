@@ -6,7 +6,7 @@
 /*   By: dnakano <dnakano@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/31 15:08:38 by dnakano           #+#    #+#             */
-/*   Updated: 2021/05/31 19:10:38 by dnakano          ###   ########.fr       */
+/*   Updated: 2021/06/01 20:49:09 by dnakano          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void check(const void *src, size_t n) {
 
   ASSERT_EQ(ret_std, dst_std);
   ASSERT_EQ(ret_ft, dst_ft);
+  ASSERT_TRUE(!memcmp(dst_std, dst_ft, n));
 }
 
 TEST_F(memcpyTest, _0BytesString) {
