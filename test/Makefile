@@ -6,7 +6,7 @@
 #    By: dnakano <dnakano@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/09 10:22:35 by dnakano           #+#    #+#              #
-#    Updated: 2021/06/01 22:39:58 by dnakano          ###   ########.fr        #
+#    Updated: 2021/07/13 22:36:35 by dnakano          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,13 @@ CPPFLAGS	=	-Wall -Wextra -Werror -std=c++11
 
 ### config ###
 SRCNAME		=	ft_memset.c \
-				ft_memcpy.c
+				ft_memcpy.c \
+				ft_bzero.c
 SRCDIR		=	..
 INCLUDEDIR	=	..
 TESTSRCNAME	=	test_memset.cc \
-				test_memcpy.cc
+				test_memcpy.cc \
+				test_bzero.cc
 TESTSRCDIR	=	.
 ### config ###
 
